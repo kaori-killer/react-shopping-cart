@@ -4,7 +4,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   const handleClickHome = () => {
-    navigate("/");
+    navigate("/products");
   };
   const handleClickCart = () => {
     navigate("/cart");

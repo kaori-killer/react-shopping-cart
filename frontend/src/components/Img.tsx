@@ -1,3 +1,5 @@
+import classnames from "classnames";
+
 const size = {
   default: "",
   small: "w-144 h-144",
@@ -6,10 +8,17 @@ const size = {
 
 interface ImgProps {
   variant: "default" | "small" | "big";
+  className?: string;
   src: string;
   alt: string;
 }
 
-export default function Img({ variant, src, alt }: ImgProps) {
-  return <img className={size[variant]} src={src} alt={alt} />;
+export default function Img({ variant, src, alt, className }: ImgProps) {
+  return (
+    <img
+      className={classnames(size[variant], { className })}
+      src={src}
+      alt={alt}
+    />
+  );
 }

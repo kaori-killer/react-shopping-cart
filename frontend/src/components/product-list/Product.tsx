@@ -4,16 +4,22 @@ import product from "../../assets/images/product.png";
 import cart from "../../assets/svgs/cart.svg";
 
 import Img from "../Img";
+import { useNavigate } from "react-router-dom";
 
 export default function Product() {
+  const navigate = useNavigate();
   const { value: isSelect, toggle } = useBoolean(false);
+
+  const handleClickCart = () => {
+    navigate("/products/1");
+  };
 
   const handleClickSelect = () => {
     toggle();
   };
 
   return (
-    <div>
+    <div onClick={handleClickCart}>
       <Img variant="default" src={product} alt="PET보틀-정사각(420ml)" />
       <div className="flex justify-between w-280 p-5">
         <div className="product-info">
