@@ -1,10 +1,17 @@
 import Layout from "./components/Layout";
-import ProductTable from "./components/products/ProductTable";
+
+import IntroPage from "./pages/IntroPage";
+import CartPage from "./pages/CartPage";
+import OrderPage from "./pages/OrderPage";
 
 const routes = [
   {
     element: <Layout />,
-    children: [{ path: "/", element: <ProductTable /> }],
+    children: [
+      { path: "/", element: <IntroPage /> },
+      { path: "/cart", element: <CartPage /> },
+      { path: "/order", element: <OrderPage /> },
+    ],
   },
 ];
 
