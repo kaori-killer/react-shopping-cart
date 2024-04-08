@@ -3,7 +3,7 @@ import { useBoolean } from "usehooks-ts";
 import product from "../../assets/images/product.png";
 import cart from "../../assets/svgs/cart.svg";
 
-import Img from "../Img";
+import Img from "../Image";
 import { useNavigate } from "react-router-dom";
 
 export default function Product() {
@@ -19,8 +19,13 @@ export default function Product() {
   };
 
   return (
-    <div onClick={handleClickCart}>
-      <Img variant="default" src={product} alt="PET보틀-정사각(420ml)" />
+    <div>
+      <Img
+        variant="default"
+        src={product}
+        alt="PET보틀-정사각(420ml)"
+        onClick={handleClickCart}
+      />
       <div className="flex justify-between w-280 p-5">
         <div className="product-info">
           <span className="product-info__name">PET보틀-정사각(420ml)</span>

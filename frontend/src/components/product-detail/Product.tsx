@@ -1,6 +1,6 @@
 import product from "../../assets/images/product.png";
 
-import Img from "../Img";
+import Img from "../Image";
 import { useNavigate } from "react-router-dom";
 
 export default function Product() {
