@@ -1,4 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 export default function CartSection() {
+  const navigate = useNavigate();
+
+  const handleClickOrder = () => {
+    navigate("/orders");
+  };
+
   return (
     <section className="cart-right-section">
       <div className="cart-right-section__top">
@@ -11,7 +19,12 @@ export default function CartSection() {
           <span className="highlight-text">21,800원</span>
         </div>
         <div className="flex-center mt-30 mx-10">
-          <button className="primary-button flex-center">주문하기(3개)</button>
+          <button
+            className="primary-button flex-center"
+            onClick={handleClickOrder}
+          >
+            주문하기(3개)
+          </button>
         </div>
       </div>
     </section>
