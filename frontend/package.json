@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "start": "vite",
     "build": "tsc && vite build",
     "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx .",
     "test": "jest",
@@ -15,9 +16,11 @@
     "chromatic": "npx chromatic --project-token=chpt_1f28d13fc46959b"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "classnames": "^2.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.22.1",
     "reflect-metadata": "^0.2.2",
     "storybook-addon-state": "^1.0.3",
@@ -35,6 +38,7 @@
     "@storybook/test": "^7.6.17",
     "@swc/core": "^1.4.12",
     "@swc/jest": "^0.2.36",
+    "@tanstack/react-query-devtools": "^5.29.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^14.2.2",
     "@types/jest": "^29.5.12",

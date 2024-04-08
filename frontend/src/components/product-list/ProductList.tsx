@@ -1,10 +1,16 @@
-import Product from "./Product";
+import ProductItem from "./ProductItem";
 
-export default function ProductList() {
+import { ProductDetail } from "../../types";
+
+type ProductListProps = {
+  products: ProductDetail[];
+};
+
+export default function ProductList({ products }: ProductListProps) {
   return (
     <section className="product-container">
-      {new Array(16).fill(0).map((_, i) => (
-        <Product key={i} />
+      {products.map((product) => (
+        <ProductItem key={product.id} product={product} />
       ))}
     </section>
   );

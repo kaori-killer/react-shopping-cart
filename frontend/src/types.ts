@@ -1,15 +1,11 @@
-export interface Image {
-  url: string;
-}
-
-export interface ProductDetail {
+export type ProductDetail = {
   id: number;
   price: number;
-  imageUrl: Image;
+  imageUrl: string;
   name: string;
-}
+};
 
-export interface CartDetail {
+export type CartDetail = {
   id: number;
   product: ProductDetail;
-}
+};

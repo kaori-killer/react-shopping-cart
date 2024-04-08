@@ -1,28 +1,28 @@
 import classnames from "classnames";
-import { Image } from "../types";
 
 const IMAGE_SIZES = {
-  default: "",
+  default: "w-280 h-280",
   small: "w-144 h-144",
   big: "w-480 h-480",
 };
 
-interface ImgProps {
+type ImageProps = {
   variant: "default" | "small" | "big";
   className?: string;
-  image: Image;
-}
+  src: string;
+  alt: string;
+};
 
-export default function ProductImages({ variant, className, image }: ImgProps) {
-  if (!image) {
+export default function Image({ variant, className, src, alt }: ImageProps) {
+  if (!src) {
     return null;
   }
 
   return (
     <img
       className={classnames(IMAGE_SIZES[variant], { className })}
-      src={image.url}
-      alt="Product Image"
+      src={src}
+      alt={alt}
     />
   );
 }

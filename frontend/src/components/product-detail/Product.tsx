@@ -1,6 +1,5 @@
 import product from "../../assets/images/product.png";
 
-import Img from "../Image";
 import { useNavigate } from "react-router-dom";
 
 export default function Product() {
@@ -13,12 +12,7 @@ export default function Product() {
   return (
     <div className="product-detail-container">
       <div className="flex-col-center w-520">
-        <Img
-          variant="big"
-          className="mb-10"
-          src={product}
-          alt="PET보틀-정사각(420ml)"
-        />
+        <img className="mb-10" src={product} alt="PET보틀-정사각(420ml)" />
         <div className="product-detail-info">
           <span className="product-detail-info__name">
             PET보틀-정사각(420ml)

@@ -1,8 +1,6 @@
 import product from "../../assets/images/product.png";
 import trash from "../../assets/svgs/trash.svg";
 
-import Img from "../Image";
-
 export default function CartList() {
   return (
     <section className="cart-left-section">
@@ -30,7 +28,7 @@ export default function CartList() {
             type="checkbox"
             checked={true}
           />
-          <Img variant="small" src={product} alt="PET보틀-정사각(420ml)" />
+          <img src={product} alt="PET보틀-정사각(420ml)" />
           <span className="cart-name">PET보틀-정사각(420ml)</span>
         </div>
         <div className="flex-col-center justify-end gap-15">
