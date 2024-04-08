@@ -1,25 +1,24 @@
-import { useBoolean } from "usehooks-ts";
-
 import Image from "../Image";
 
 import { ProductDetail } from "../../types";
 
 import cart from "../../assets/svgs/cart.svg";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type ProductItemProps = {
   product: ProductDetail;
 };
+
 export default function ProductItem({ product }: ProductItemProps) {
   const navigate = useNavigate();
-  const { value: isSelect, toggle } = useBoolean(false);
   const productPrice = product.price.toLocaleString();
 
   const handleClickProductItem = () => {
     navigate(`/products/${product.id}`);
   };
-  const handleClickButton = () => {
-    toggle();
+
+  const handleClickAddCard = () => {
+    confirm("장바구니에 추가되었습니다.");
   };
 
   return (
@@ -32,11 +31,9 @@ export default function ProductItem({ product }: ProductItemProps) {
           <span className="product-info__name">{product.name}</span>
           <span className="product-info__price">{productPrice}원</span>
         </div>
-        {isSelect ? (
-          <p>✅</p>
-        ) : (
-          <img src={cart} alt="장바구니" onClick={handleClickButton} />
-        )}
+        <button type="button" onClick={handleClickAddCard}>
+          <img src={cart} alt="장바구니" />
+        </button>
       </div>
     </div>
   );
