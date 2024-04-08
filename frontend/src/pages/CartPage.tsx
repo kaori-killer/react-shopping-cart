@@ -1,13 +1,21 @@
-import Header from "../components/cart-list/Header";
+import CartHeader from "../components/cart-list/CartHeader";
 import CartList from "../components/cart-list/CartList";
 import CartSection from "../components/cart-list/CartSection";
 
+import useCartListQuery from "../quires/useCartListQuery";
+
 export default function CartPage() {
+  const { data } = useCartListQuery();
+
+  if (!data) {
+    return null;
+  }
+
   return (
     <section className="cart-section">
-      <Header />
+      <CartHeader />
       <div className="flex">
-        <CartList />
+        <CartList carts={data} />
         <CartSection />
       </div>
     </section>

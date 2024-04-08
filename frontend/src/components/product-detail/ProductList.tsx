@@ -6,7 +6,7 @@ type ProductProps = {
   productId: number;
 };
 
-export default function Product({ productId }: ProductProps) {
+export default function ProductList({ productId }: ProductProps) {
   const { data } = useProductDetailQuery(productId);
 
   if (!data) {
