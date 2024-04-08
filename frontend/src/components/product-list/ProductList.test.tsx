@@ -1,9 +1,9 @@
 import { render, screen, waitFor } from "@testing-library/react";
 
-import ProductTable from "./ProductList";
+import ProductList from "./ProductList";
 
 test("ProductTable", async () => {
-  render(<ProductTable />);
+  render(<ProductList products={[]} />);
 
   await waitFor(() => {
     screen.getByText("Apple");

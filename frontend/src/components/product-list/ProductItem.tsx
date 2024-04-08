@@ -5,7 +5,7 @@ import Image from "../Image";
 import { ProductDetail } from "../../types";
 
 import cart from "../../assets/svgs/cart.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 type ProductItemProps = {
   product: ProductDetail;
@@ -16,15 +16,17 @@ export default function ProductItem({ product }: ProductItemProps) {
   const productPrice = product.price.toLocaleString();
 
   const handleClickProductItem = () => {
-    // navigate(`/products/${}`);
+    navigate(`/products/${product.id}`);
   };
   const handleClickButton = () => {
     toggle();
   };
 
   return (
-    <div onClick={handleClickProductItem}>
-      <Image variant="default" src={product.imageUrl} alt={product.name} />
+    <div>
+      <div onClick={handleClickProductItem}>
+        <Image variant="default" src={product.imageUrl} alt={product.name} />
+      </div>
       <div className="flex justify-between w-280 p-5">
         <div className="product-info">
           <span className="product-info__name">{product.name}</span>
