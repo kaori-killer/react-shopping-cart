@@ -1,8 +1,8 @@
 import ProductList from "../components/product-list/ProductList";
-import useProductsQuery from "../quires/useProductsQuery";
+import useProductListQuery from "../quires/useProductListQuery";
 
 export default function ProductListPage() {
-  const { data } = useProductsQuery();
+  const { data } = useProductListQuery();
 
   if (!data) {
     return null;

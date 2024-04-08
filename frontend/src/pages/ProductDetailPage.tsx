@@ -1,11 +1,14 @@
-import { useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import Product from "../components/product-detail/Product";
 
 export default function ProductDetailPage() {
-  const params = useSearchParams();
+  const { id } = useParams();
+  const productId = Number(id);
 
-  console.log(params);
+  if (!productId) {
+    return null;
+  }
 
-  return <Product />;
+  return <Product productId={productId} />;
 }

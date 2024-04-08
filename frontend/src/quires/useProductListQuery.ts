@@ -12,8 +12,8 @@ const fetcher = () =>
     return data;
   });
 
-const useProductsQuery = () => {
-  return useQuery(`/products`, fetcher);
+const useProductListQuery = () => {
+  return useQuery(QUERY_KEY, fetcher);
 };
 
-export default useProductsQuery;
+export default useProductListQuery;
