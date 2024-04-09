@@ -1,4 +1,4 @@
-import CartHeader from "../components/cart-list/CartHeader";
+import Title from "../components/ui/Title";
 import CartList from "../components/cart-list/CartList";
 import CartSection from "../components/cart-list/CartSection";
 
@@ -13,7 +13,7 @@ export default function CartPage() {
 
   return (
     <section className="cart-section">
-      <CartHeader />
+      <Title variant="cart" text="장바구니" />
       <div className="flex">
         <CartList carts={data} />
         <CartSection />

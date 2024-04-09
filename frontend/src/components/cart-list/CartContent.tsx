@@ -1,6 +1,6 @@
 import trash from "../../assets/svgs/trash.svg";
 
-import Image from "../Image";
+import Image from "../ui/Image";
 
 import { CartDetail } from "../../types";
 

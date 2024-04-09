@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import cart from "../../assets/svgs/cart.svg";
 
-import Image from "../Image";
+import Image from "../ui/Image";
 
 import useCartListMutation from "../../quires/useCartListMutation";
 
