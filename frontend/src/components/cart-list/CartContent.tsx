@@ -5,6 +5,7 @@ import Image from "../ui/Image";
 import { CartDetail } from "../../types";
 
 import priceFormat from "../../utils/PriceFormat";
+import { useBoolean } from "usehooks-ts";
 
 type CartContentProps = {
   cart: CartDetail;
@@ -12,6 +13,7 @@ type CartContentProps = {
 
 export default function CartContent({ cart }: CartContentProps) {
   const { product } = cart;
+  const { value: isChecked, toggle } = useBoolean(false);
 
   return (
     <div className="cart-container">
@@ -20,7 +22,8 @@ export default function CartContent({ cart }: CartContentProps) {
           className="checkbox"
           name="checkbox"
           type="checkbox"
-          checked={true}
+          checked={isChecked}
+          onClick={toggle}
         />
         <Image
           variant="small"
