@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
+import useCartListMutation from "../../quires/useCartListMutation";
+
 import { ProductDetail } from "../../types";
 
 import priceFormat from "../../utils/PriceFormat";
@@ -9,9 +11,12 @@ type ProductContentProps = {
 };
 
 export default function ProductContent({ product }: ProductContentProps) {
+  const { mutate } = useCartListMutation();
   const navigate = useNavigate();
 
-  const handleClickCart = () => {
+  const handleAddProductToCart = () => {
+    confirm("장바구니에 추가되었습니다.");
+    mutate(product);
     navigate("/cart");
   };
 
@@ -31,7 +36,7 @@ export default function ProductContent({ product }: ProductContentProps) {
         </div>
         <button
           className="product-detail-button flex-center mt-20"
-          onClick={handleClickCart}
+          onClick={handleAddProductToCart}
         >
           장바구니
         </button>

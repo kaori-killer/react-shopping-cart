@@ -23,7 +23,7 @@ export default function ProductItem({ product }: ProductItemProps) {
     navigate(`/products/${product.id}`);
   };
 
-  const handleClickAddCard = () => {
+  const handleAddProductToCart = () => {
     confirm("장바구니에 추가되었습니다.");
     mutate(product);
   };
@@ -40,7 +40,7 @@ export default function ProductItem({ product }: ProductItemProps) {
             {priceFormat(product.price)}원
           </span>
         </div>
-        <button type="button" onClick={handleClickAddCard}>
+        <button type="button" onClick={handleAddProductToCart}>
           <img src={cart} alt="장바구니" />
         </button>
       </div>
