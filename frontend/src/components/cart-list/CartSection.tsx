@@ -4,7 +4,7 @@ export default function CartSection() {
   const navigate = useNavigate();
 
   const handleClickOrder = () => {
-    navigate("/orders");
+    navigate("/order-pay");
   };
 
   return (

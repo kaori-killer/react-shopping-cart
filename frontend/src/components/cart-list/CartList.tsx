@@ -26,9 +26,11 @@ export default function CartList({ carts }: CartListProps) {
       <h3 className="cart-title">든든배송 상품({carts.length}개)</h3>
       <hr className="divide-line-gray mt-10" />
       {carts.map((cart) => (
-        <CartContent key={cart.id} cart={cart} />
+        <>
+          <CartContent key={cart.id} cart={cart} />
+          <hr className="divide-line-thin mt-10" />
+        </>
       ))}
-      <hr className="divide-line-thin mt-10" />
     </section>
   );
 }

@@ -1,9 +1,10 @@
 import Layout from "./components/Layout";
 
-import CartPage from "./pages/CartPage";
-import OrderPage from "./pages/OrderPage";
-import ProductDetailPage from "./pages/ProductDetailPage";
 import ProductListPage from "./pages/ProductListPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import CartPage from "./pages/CartPage";
+import OrderPayListPage from "./pages/OrderPayListPage";
+import OrderPage from "./pages/OrderPage";
 import OrderDetailPage from "./pages/OrderDetailPage";
 
 const routes = [
@@ -14,6 +15,7 @@ const routes = [
       { path: "/products", element: <ProductListPage /> },
       { path: "/products/:id", element: <ProductDetailPage /> },
       { path: "/cart", element: <CartPage /> },
+      { path: "/order-pay", element: <OrderPayListPage /> },
       { path: "/orders", element: <OrderPage /> },
       { path: "/orders/:id{", element: <OrderDetailPage /> },
     ],
