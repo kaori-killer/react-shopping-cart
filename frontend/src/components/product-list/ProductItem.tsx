@@ -4,6 +4,8 @@ import cart from "../../assets/svgs/cart.svg";
 
 import Image from "../Image";
 
+import useCartListMutation from "../../quires/useCartListMutation";
+
 import { ProductDetail } from "../../types";
 
 import priceFormat from "../../utils/PriceFormat";
@@ -13,6 +15,8 @@ type ProductItemProps = {
 };
 
 export default function ProductItem({ product }: ProductItemProps) {
+  const { mutate } = useCartListMutation();
+
   const navigate = useNavigate();
 
   const handleClickProductItem = () => {
@@ -21,6 +25,7 @@ export default function ProductItem({ product }: ProductItemProps) {
 
   const handleClickAddCard = () => {
     confirm("장바구니에 추가되었습니다.");
+    mutate(product);
   };
 
   return (
