@@ -4,12 +4,16 @@ import { OrderPayDetail } from "../types";
 
 type InitialOrderPayList = {
   getOrderPayList: () => OrderPayDetail[];
-  addOrderPayList: (orderPayDetail: OrderPayDetail) => void;
+  addProductToOrderPayList: (product: OrderPayDetail) => void;
+  updateProductInOrderPayList: (product: OrderPayDetail) => void;
+  deleteProductFromOrderPayList: (id: number) => void;
 };
 
 const initialOrderPayList: InitialOrderPayList = {
   getOrderPayList: () => [],
-  addOrderPayList: () => null,
+  addProductToOrderPayList: () => null,
+  updateProductInOrderPayList: () => null,
+  deleteProductFromOrderPayList: () => null,
 };
 
 export const OrderPayListContext = createContext(initialOrderPayList);
@@ -21,15 +25,28 @@ export default function OrderPayListProvider({ children }: PropsWithChildren) {
     return orderPayList;
   };
 
-  const addOrderPayList = (orderPayDetail: OrderPayDetail) => {
-    setOrderPayList([orderPayDetail, ...orderPayList]);
+  const addProductToOrderPayList = (product: OrderPayDetail) => {
+    setOrderPayList([product, ...orderPayList]);
+  };
+
+  const updateProductInOrderPayList = (product: OrderPayDetail) => {
+    const newOrderPayList = orderPayList.map((preProduct) =>
+      preProduct.id != product.id ? preProduct : product
+    );
+    setOrderPayList(newOrderPayList);
+  };
+
+  const deleteProductFromOrderPayList = (id: number) => {
+    setOrderPayList(orderPayList.filter((preProduct) => preProduct.id != id));
   };
 
   return (
     <OrderPayListContext.Provider
       value={{
         getOrderPayList,
-        addOrderPayList,
+        addProductToOrderPayList,
+        updateProductInOrderPayList,
+        deleteProductFromOrderPayList,
       }}
     >
       {children}

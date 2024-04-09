@@ -1,19 +1,47 @@
+import { useState } from "react";
+
+import { useBoolean } from "usehooks-ts";
+
 import trash from "../../assets/svgs/trash.svg";
 
 import Image from "../ui/Image";
 
-import { CartDetail } from "../../types";
+import { CartDetail, OrderPayDetail } from "../../types";
 
 import priceFormat from "../../utils/PriceFormat";
-import { useBoolean } from "usehooks-ts";
+
+import { useOrderPayListContext } from "../../hooks/useOrderPayListContext";
 
 type CartContentProps = {
   cart: CartDetail;
 };
 
+const DEFAULT_QUANTITY = 1;
+
 export default function CartContent({ cart }: CartContentProps) {
   const { product } = cart;
   const { value: isChecked, toggle } = useBoolean(false);
+  const [quantity, setQuantity] = useState(DEFAULT_QUANTITY);
+  const {
+    getOrderPayList,
+    addProductToOrderPayList,
+    updateProductInOrderPayList,
+    deleteProductFromOrderPayList,
+  } = useOrderPayListContext();
+
+  const handleToggleProductSelection = () => {
+    toggle();
+
+    if (isChecked) {
+      addProductToOrderPayList({ ...product, quantity });
+    }
+
+    if (!isChecked) {
+      deleteProductFromOrderPayList(product.id);
+    }
+
+    console.log(getOrderPayList());
+  };
 
   return (
     <div className="cart-container">
@@ -22,8 +50,8 @@ export default function CartContent({ cart }: CartContentProps) {
           className="checkbox"
           name="checkbox"
           type="checkbox"
-          checked={isChecked}
-          onClick={toggle}
+          defaultChecked={isChecked}
+          onClick={handleToggleProductSelection}
         />
         <Image
           variant="small"
@@ -35,7 +63,11 @@ export default function CartContent({ cart }: CartContentProps) {
       <div className="flex-col-center justify-end gap-15">
         <img className="cart-trash-svg" src={trash} alt="삭제" />
         <div className="number-input-container">
-          <input type="number" className="number-input" value="1" />
+          <input
+            type="number"
+            className="number-input"
+            value={DEFAULT_QUANTITY}
+          />
           <div>
             <button className="number-input-button">▲</button>
             <button className="number-input-button">▼</button>
