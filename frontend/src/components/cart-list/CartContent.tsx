@@ -6,22 +6,35 @@ import trash from "../../assets/svgs/trash.svg";
 
 import Image from "../ui/Image";
 
-import { CartDetail, OrderPayDetail } from "../../types";
+import { CartDetail } from "../../types";
 
 import priceFormat from "../../utils/PriceFormat";
 
 import { useOrderPayListContext } from "../../hooks/useOrderPayListContext";
 
+function Quantity() {
+  return (
+    <div className="number-input-container">
+      <input type="number" className="number-input" value="1" />
+      <div>
+        <button className="number-input-button">▲</button>
+        <button className="number-input-button">▼</button>
+      </div>
+    </div>
+  );
+}
+
+function Price({ price }) {
+  return <span className="cart-price">{priceFormat(price)}원</span>;
+}
+
 type CartContentProps = {
   cart: CartDetail;
 };
 
-const DEFAULT_QUANTITY = 1;
-
 export default function CartContent({ cart }: CartContentProps) {
   const { product } = cart;
   const { value: isChecked, toggle } = useBoolean(false);
-  const [quantity, setQuantity] = useState(DEFAULT_QUANTITY);
   const {
     getOrderPayList,
     addProductToOrderPayList,
@@ -32,13 +45,9 @@ export default function CartContent({ cart }: CartContentProps) {
   const handleToggleProductSelection = () => {
     toggle();
 
-    if (isChecked) {
-      addProductToOrderPayList({ ...product, quantity });
-    }
-
-    if (!isChecked) {
-      deleteProductFromOrderPayList(product.id);
-    }
+    isChecked
+      ? addProductToOrderPayList(product)
+      : deleteProductFromOrderPayList(product.id);
 
     console.log(getOrderPayList());
   };
@@ -62,18 +71,8 @@ export default function CartContent({ cart }: CartContentProps) {
       </div>
       <div className="flex-col-center justify-end gap-15">
         <img className="cart-trash-svg" src={trash} alt="삭제" />
-        <div className="number-input-container">
-          <input
-            type="number"
-            className="number-input"
-            value={DEFAULT_QUANTITY}
-          />
-          <div>
-            <button className="number-input-button">▲</button>
-            <button className="number-input-button">▼</button>
-          </div>
-        </div>
-        <span className="cart-price">{priceFormat(product.price)}원</span>
+        <Quantity />
+        <Price price={product.price} />
       </div>
     </div>
   );
