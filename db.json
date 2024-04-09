@@ -243,66 +243,21 @@
   ],
   "carts": [
     {
-      "id": 1712626965627,
+      "id": 1712629062639,
       "product": {
-        "id": 1,
-        "name": "냉면용기(대)",
-        "price": 83700,
-        "imageUrl": "https://cdn-mart.baemin.com/goods/2/1556008840639m0.jpg"
+        "id": 10,
+        "name": "tes11111t",
+        "price": 1234,
+        "imageUrl": "test.com"
       }
     },
     {
-      "id": 1712626969311,
-      "product": {
-        "id": 1,
-        "name": "냉면용기(대)",
-        "price": 83700,
-        "imageUrl": "https://cdn-mart.baemin.com/goods/2/1556008840639m0.jpg"
-      }
-    },
-    {
-      "id": 1712627050677,
-      "product": {
-        "id": 1,
-        "name": "냉면용기(대)",
-        "price": 83700,
-        "imageUrl": "https://cdn-mart.baemin.com/goods/2/1556008840639m0.jpg"
-      }
-    },
-    {
-      "id": 1712627056567,
-      "product": {
-        "id": 2,
-        "name": "생새우살 (71/90) 500g 4개",
-        "price": 29000,
-        "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/6b95c66a-c13d-4ccd-9df5-b1af1428a225.jpg"
-      }
-    },
-    {
-      "id": 1712627112172,
+      "id": 1712629078397,
       "product": {
         "id": 3,
         "name": "펩시 콜라 355ml 24캔",
         "price": 83700,
         "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/84fc0238-0239-4d0e-870b-a9daa6f2c42c.jpg"
-      }
-    },
-    {
-      "id": 1712627153735,
-      "product": {
-        "id": 2,
-        "name": "생새우살 (71/90) 500g 4개",
-        "price": 29000,
-        "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/6b95c66a-c13d-4ccd-9df5-b1af1428a225.jpg"
-      }
-    },
-    {
-      "id": 1712627158370,
-      "product": {
-        "id": 2,
-        "name": "생새우살 (71/90) 500g 4개",
-        "price": 29000,
-        "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/6b95c66a-c13d-4ccd-9df5-b1af1428a225.jpg"
       }
     }
   ],

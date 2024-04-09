@@ -7,7 +7,6 @@ type CartListProps = {
 };
 
 export default function CartList({ carts }: CartListProps) {
-  console.log(carts);
   return (
     <section className="cart-left-section">
       <div className="flex justify-between items-center">
