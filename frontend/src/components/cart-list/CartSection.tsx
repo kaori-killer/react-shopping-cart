@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom";
 
+import priceFormat from "../../utils/PriceFormat";
+
+import { useOrderPayListContext } from "../../hooks/useOrderPayListContext";
+
 export default function CartSection() {
   const navigate = useNavigate();
+  const { totalPrice } = useOrderPayListContext();
 
   const handleClickOrder = () => {
     navigate("/order-pay");
@@ -16,7 +21,7 @@ export default function CartSection() {
       <div className="cart-right-section__bottom">
         <div className="flex justify-between p-20 mt-20">
           <span className="highlight-text">결제예상금액</span>
-          <span className="highlight-text">21,800원</span>
+          <span className="highlight-text">{priceFormat(totalPrice)}원</span>
         </div>
         <div className="flex-center mt-30 mx-10">
           <button

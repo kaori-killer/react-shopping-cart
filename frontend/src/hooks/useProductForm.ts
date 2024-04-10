@@ -3,7 +3,7 @@ import { useState } from "react";
 export const useProductForm = () => {
   const [quantity, setQuantity] = useState(1);
 
-  const getTotalPrice = (price: number) => {
+  const getProductTotalPrice = (price: number) => {
     return price * quantity;
   };
 
@@ -15,5 +15,5 @@ export const useProductForm = () => {
     setQuantity(newQuantity);
   };
 
-  return { getTotalPrice, updateQuantity, quantity };
+  return { getProductTotalPrice, updateQuantity, quantity };
 };

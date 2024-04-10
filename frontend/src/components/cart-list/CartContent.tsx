@@ -1,52 +1,16 @@
-import { useBoolean } from "usehooks-ts";
+import { useEffect, useState } from "react";
 
 import trash from "../../assets/svgs/trash.svg";
+
+import Quantity from "./Quantity";
+import Price from "./Price";
 
 import Image from "../ui/Image";
 
 import { CartDetail } from "../../types";
 
-import priceFormat from "../../utils/PriceFormat";
-
 import { useOrderPayListContext } from "../../hooks/useOrderPayListContext";
 import { useProductForm } from "../../hooks/useProductForm";
-
-type QuantityProps = {
-  quantity: number;
-  updateQuantity: (newQuantity: number) => void;
-};
-
-function Quantity({ quantity, updateQuantity }: QuantityProps) {
-  const handleClickIncrease = () => {
-    updateQuantity(quantity + 1);
-  };
-
-  const handleClickDecrease = () => {
-    updateQuantity(quantity - 1);
-  };
-
-  return (
-    <div className="number-input-container">
-      <input type="number" className="number-input" value={quantity} />
-      <div>
-        <button className="number-input-button" onClick={handleClickIncrease}>
-          ▲
-        </button>
-        <button className="number-input-button" onClick={handleClickDecrease}>
-          ▼
-        </button>
-      </div>
-    </div>
-  );
-}
-
-type PriceProps = {
-  totalPrice: number;
-};
-
-function Price({ totalPrice }: PriceProps) {
-  return <span className="cart-price">{priceFormat(totalPrice)}원</span>;
-}
 
 type CartContentProps = {
   cart: CartDetail;
@@ -54,19 +18,34 @@ type CartContentProps = {
 
 export default function CartContent({ cart }: CartContentProps) {
   const { product } = cart;
-  const { value: isChecked, toggle } = useBoolean(false);
-  const { getTotalPrice, updateQuantity, quantity } = useProductForm();
-  const { addProductToOrderPayList, deleteProductFromOrderPayList } =
-    useOrderPayListContext();
+  const [isChecked, setIsChecked] = useState(false);
+  const { getProductTotalPrice, updateQuantity, quantity } = useProductForm();
+  const {
+    addProductToOrderPayList,
+    deleteProductFromOrderPayList,
+    updateTotalPrice,
+    updateProductInOrderPayList,
+  } = useOrderPayListContext();
 
-  const handleToggleProductSelection = () => {
-    toggle();
+  useEffect(() => {
+    updateProductInOrderPayList(product, quantity);
+  }, [quantity]);
 
-    const quantity = getQuantity();
+  const handleToggleProductSelection: React.MouseEventHandler<
+    HTMLInputElement
+  > = (event) => {
+    const { checked } = event.target;
+    setIsChecked(!isChecked);
 
-    isChecked
-      ? addProductToOrderPayList(product, quantity)
-      : deleteProductFromOrderPayList(product.id);
+    if (checked) {
+      addProductToOrderPayList(product, quantity);
+      updateTotalPrice(product.price, quantity);
+    }
+
+    if (!checked) {
+      deleteProductFromOrderPayList(product.id);
+      updateTotalPrice(-product.price, quantity);
+    }
   };
 
   return (
@@ -76,7 +55,7 @@ export default function CartContent({ cart }: CartContentProps) {
           className="checkbox"
           name="checkbox"
           type="checkbox"
-          defaultChecked={isChecked}
+          checked={isChecked}
           onClick={handleToggleProductSelection}
         />
         <Image
@@ -89,7 +68,7 @@ export default function CartContent({ cart }: CartContentProps) {
       <div className="flex-col-center justify-end gap-15">
         <img className="cart-trash-svg" src={trash} alt="삭제" />
         <Quantity quantity={quantity} updateQuantity={updateQuantity} />
-        <Price totalPrice={getTotalPrice(product.price)} />
+        <Price totalPrice={getProductTotalPrice(product.price)} />
       </div>
     </div>
   );

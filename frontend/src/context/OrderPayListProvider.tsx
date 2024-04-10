@@ -10,6 +10,8 @@ type InitialOrderPayList = {
     quantity: number
   ) => void;
   deleteProductFromOrderPayList: (id: number) => void;
+  totalPrice: number;
+  updateTotalPrice: (price: number, quantity: number) => number;
 };
 
 const initialOrderPayList: InitialOrderPayList = {
@@ -17,12 +19,15 @@ const initialOrderPayList: InitialOrderPayList = {
   addProductToOrderPayList: () => null,
   updateProductInOrderPayList: () => null,
   deleteProductFromOrderPayList: () => null,
+  totalPrice: 0,
+  updateTotalPrice: () => 0,
 };
 
 export const OrderPayListContext = createContext(initialOrderPayList);
 
 export default function OrderPayListProvider({ children }: PropsWithChildren) {
   const [orderPayList, setOrderPayList] = useState<OrderPayDetail[]>([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const getOrderPayList = (): OrderPayDetail[] => {
     return orderPayList;
@@ -49,6 +54,11 @@ export default function OrderPayListProvider({ children }: PropsWithChildren) {
     setOrderPayList(orderPayList.filter((preProduct) => preProduct.id != id));
   };
 
+  const updateTotalPrice = (price: number, quantity: number): number => {
+    setTotalPrice(totalPrice + price * quantity);
+    return totalPrice;
+  };
+
   return (
     <OrderPayListContext.Provider
       value={{
@@ -56,6 +66,8 @@ export default function OrderPayListProvider({ children }: PropsWithChildren) {
         addProductToOrderPayList,
         updateProductInOrderPayList,
         deleteProductFromOrderPayList,
+        totalPrice,
+        updateTotalPrice,
       }}
     >
       {children}
