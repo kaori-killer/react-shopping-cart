@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { useBoolean } from "usehooks-ts";
 
 import trash from "../../assets/svgs/trash.svg";
@@ -11,11 +9,17 @@ import { CartDetail } from "../../types";
 import priceFormat from "../../utils/PriceFormat";
 
 import { useOrderPayListContext } from "../../hooks/useOrderPayListContext";
+import { useProductForm } from "../../hooks/useProductForm";
 
-function Quantity() {
+type Quantity = {
+  quantity: number;
+  updateQuantity: (newQuantity: number) => void;
+};
+
+function Quantity(quantity, updateQuantity) {
   return (
     <div className="number-input-container">
-      <input type="number" className="number-input" value="1" />
+      <input type="number" className="number-input" value={quantity} />
       <div>
         <button className="number-input-button">▲</button>
         <button className="number-input-button">▼</button>
@@ -24,8 +28,12 @@ function Quantity() {
   );
 }
 
-function Price({ price }) {
-  return <span className="cart-price">{priceFormat(price)}원</span>;
+type PriceProps = {
+  totalPrice: number;
+};
+
+function Price({ totalPrice }: PriceProps) {
+  return <span className="cart-price">{priceFormat(totalPrice)}원</span>;
 }
 
 type CartContentProps = {
@@ -35,21 +43,18 @@ type CartContentProps = {
 export default function CartContent({ cart }: CartContentProps) {
   const { product } = cart;
   const { value: isChecked, toggle } = useBoolean(false);
-  const {
-    getOrderPayList,
-    addProductToOrderPayList,
-    updateProductInOrderPayList,
-    deleteProductFromOrderPayList,
-  } = useOrderPayListContext();
+  const { getTotalPrice, updateQuantity, quantity } = useProductForm();
+  const { addProductToOrderPayList, deleteProductFromOrderPayList } =
+    useOrderPayListContext();
 
   const handleToggleProductSelection = () => {
     toggle();
 
-    isChecked
-      ? addProductToOrderPayList(product)
-      : deleteProductFromOrderPayList(product.id);
+    const quantity = getQuantity();
 
-    console.log(getOrderPayList());
+    isChecked
+      ? addProductToOrderPayList(product, quantity)
+      : deleteProductFromOrderPayList(product.id);
   };
 
   return (
@@ -71,8 +76,8 @@ export default function CartContent({ cart }: CartContentProps) {
       </div>
       <div className="flex-col-center justify-end gap-15">
         <img className="cart-trash-svg" src={trash} alt="삭제" />
-        <Quantity />
-        <Price price={product.price} />
+        <Quantity quantity={quantity} updateQuantity={updateQuantity} />
+        <Price totalPrice={getTotalPrice(product.price)} />
       </div>
     </div>
   );

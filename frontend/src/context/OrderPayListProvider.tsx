@@ -4,12 +4,12 @@ import { OrderPayDetail, ProductDetail } from "../types";
 
 type InitialOrderPayList = {
   getOrderPayList: () => OrderPayDetail[];
-  addProductToOrderPayList: (product: ProductDetail) => void;
-  updateProductInOrderPayList: (product: ProductDetail) => void;
+  addProductToOrderPayList: (product: ProductDetail, quantity: number) => void;
+  updateProductInOrderPayList: (
+    product: ProductDetail,
+    quantity: number
+  ) => void;
   deleteProductFromOrderPayList: (id: number) => void;
-  getPrice: (product: ProductDetail) => number;
-  getQuantity: () => number;
-  updateQuantity: (newQuantity: number) => void;
 };
 
 const initialOrderPayList: InitialOrderPayList = {
@@ -17,26 +17,28 @@ const initialOrderPayList: InitialOrderPayList = {
   addProductToOrderPayList: () => null,
   updateProductInOrderPayList: () => null,
   deleteProductFromOrderPayList: () => null,
-  getPrice: () => 0,
-  getQuantity: () => 0,
-  updateQuantity: () => null,
 };
 
 export const OrderPayListContext = createContext(initialOrderPayList);
 
 export default function OrderPayListProvider({ children }: PropsWithChildren) {
   const [orderPayList, setOrderPayList] = useState<OrderPayDetail[]>([]);
-  const [quantity, setQuantity] = useState(1);
 
   const getOrderPayList = (): OrderPayDetail[] => {
     return orderPayList;
   };
 
-  const addProductToOrderPayList = (product: ProductDetail) => {
+  const addProductToOrderPayList = (
+    product: ProductDetail,
+    quantity: number
+  ) => {
     setOrderPayList([{ ...product, quantity }, ...orderPayList]);
   };
 
-  const updateProductInOrderPayList = (product: ProductDetail) => {
+  const updateProductInOrderPayList = (
+    product: ProductDetail,
+    quantity: number
+  ) => {
     const newOrderPayList = orderPayList.map((preProduct) =>
       preProduct.id != product.id ? preProduct : { ...product, quantity }
     );
@@ -47,22 +49,6 @@ export default function OrderPayListProvider({ children }: PropsWithChildren) {
     setOrderPayList(orderPayList.filter((preProduct) => preProduct.id != id));
   };
 
-  const getPrice = (product: ProductDetail) => {
-    return product.price * quantity;
-  };
-
-  const getQuantity = () => {
-    return quantity;
-  };
-
-  const updateQuantity = (newQuantity: number) => {
-    if (newQuantity <= 0) {
-      return;
-    }
-
-    setQuantity(newQuantity);
-  };
-
   return (
     <OrderPayListContext.Provider
       value={{
@@ -70,9 +56,6 @@ export default function OrderPayListProvider({ children }: PropsWithChildren) {
         addProductToOrderPayList,
         updateProductInOrderPayList,
         deleteProductFromOrderPayList,
-        getPrice,
-        getQuantity,
-        updateQuantity,
       }}
     >
       {children}
