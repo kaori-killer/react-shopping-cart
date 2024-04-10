@@ -11,12 +11,12 @@ import priceFormat from "../../utils/PriceFormat";
 import { useOrderPayListContext } from "../../hooks/useOrderPayListContext";
 import { useProductForm } from "../../hooks/useProductForm";
 
-type Quantity = {
+type QuantityProps = {
   quantity: number;
   updateQuantity: (newQuantity: number) => void;
 };
 
-function Quantity(quantity, updateQuantity) {
+function Quantity({ quantity, updateQuantity }: QuantityProps) {
   return (
     <div className="number-input-container">
       <input type="number" className="number-input" value={quantity} />
