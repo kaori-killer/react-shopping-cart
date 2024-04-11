@@ -1,7 +1,5 @@
-import { ProductDetail } from "../../types";
-
 type QuantityProps = {
-  product: ProductDetail;
+  updateQuantity: (value: number) => void;
   quantity: number;
 };
 

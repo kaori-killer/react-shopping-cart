@@ -243,33 +243,6 @@
   ],
   "carts": [
     {
-      "id": 1712629062639,
-      "product": {
-        "id": 10,
-        "name": "tes11111t",
-        "price": 1234,
-        "imageUrl": "test.com"
-      }
-    },
-    {
-      "id": 1712629078397,
-      "product": {
-        "id": 3,
-        "name": "펩시 콜라 355ml 24캔",
-        "price": 83700,
-        "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/84fc0238-0239-4d0e-870b-a9daa6f2c42c.jpg"
-      }
-    },
-    {
-      "id": 1712629384461,
-      "product": {
-        "id": 1,
-        "name": "냉면용기(대)",
-        "price": 83700,
-        "imageUrl": "https://cdn-mart.baemin.com/goods/2/1556008840639m0.jpg"
-      }
-    },
-    {
       "id": 1712629668222,
       "product": {
         "id": 2,
@@ -280,15 +253,6 @@
     },
     {
       "id": 1712629673465,
-      "product": {
-        "id": 2,
-        "name": "생새우살 (71/90) 500g 4개",
-        "price": 29000,
-        "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/6b95c66a-c13d-4ccd-9df5-b1af1428a225.jpg"
-      }
-    },
-    {
-      "id": 1712629717218,
       "product": {
         "id": 2,
         "name": "생새우살 (71/90) 500g 4개",
@@ -330,60 +294,6 @@
         "name": "생새우살 (71/90) 500g 4개",
         "price": 29000,
         "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/6b95c66a-c13d-4ccd-9df5-b1af1428a225.jpg"
-      }
-    },
-    {
-      "id": 1712641074692,
-      "product": {
-        "id": 1,
-        "name": "냉면용기(대)",
-        "price": 83700,
-        "imageUrl": "https://cdn-mart.baemin.com/goods/2/1556008840639m0.jpg"
-      }
-    },
-    {
-      "id": 1712641076602,
-      "product": {
-        "id": 1,
-        "name": "냉면용기(대)",
-        "price": 83700,
-        "imageUrl": "https://cdn-mart.baemin.com/goods/2/1556008840639m0.jpg"
-      }
-    },
-    {
-      "id": 1712641080112,
-      "product": {
-        "id": 1,
-        "name": "냉면용기(대)",
-        "price": 83700,
-        "imageUrl": "https://cdn-mart.baemin.com/goods/2/1556008840639m0.jpg"
-      }
-    },
-    {
-      "id": 1712656459520,
-      "product": {
-        "id": 1,
-        "name": "냉면용기(대)",
-        "price": 83700,
-        "imageUrl": "https://cdn-mart.baemin.com/goods/2/1556008840639m0.jpg"
-      }
-    },
-    {
-      "id": 1712665841518,
-      "product": {
-        "id": 1,
-        "name": "냉면용기(대)",
-        "price": 83700,
-        "imageUrl": "https://cdn-mart.baemin.com/goods/2/1556008840639m0.jpg"
-      }
-    },
-    {
-      "id": 1712665843919,
-      "product": {
-        "id": 1,
-        "name": "냉면용기(대)",
-        "price": 83700,
-        "imageUrl": "https://cdn-mart.baemin.com/goods/2/1556008840639m0.jpg"
       }
     }
   ],

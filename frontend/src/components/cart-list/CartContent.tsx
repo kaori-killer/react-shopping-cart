@@ -11,6 +11,7 @@ import { CartDetail } from "../../types";
 
 import { useOrderPayListContext } from "../../hooks/useOrderPayListContext";
 import { useProductForm } from "../../hooks/useProductForm";
+import useCartListMutationDelete from "../../quires/useCartListMutationDelete";
 
 type CartContentProps = {
   cart: CartDetail;
@@ -18,6 +19,7 @@ type CartContentProps = {
 
 export default function CartContent({ cart }: CartContentProps) {
   const { product } = cart;
+  const { mutate } = useCartListMutationDelete();
   const [isChecked, setIsChecked] = useState(false);
   const { getProductTotalPrice, updateQuantity, quantity } = useProductForm();
   const {
@@ -66,7 +68,12 @@ export default function CartContent({ cart }: CartContentProps) {
         <span className="cart-name">{product.name}</span>
       </div>
       <div className="flex-col-center justify-end gap-15">
-        <img className="cart-trash-svg" src={trash} alt="삭제" />
+        <img
+          className="cart-trash-svg"
+          src={trash}
+          alt="삭제"
+          onClick={() => mutate(product.id)}
+        />
         <Quantity quantity={quantity} updateQuantity={updateQuantity} />
         <Price totalPrice={getProductTotalPrice(product.price)} />
       </div>
