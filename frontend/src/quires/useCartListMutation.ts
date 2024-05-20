@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
+
 import { QUERY_KEY as cartQueryKey } from "./useCartListQuery";
 
-import { ProductDetail } from "../types";
+import { BASE_URL } from "../components/constant";
 
-const BASE_URL = "http://localhost:3003";
+import { ProductDetail } from "../types";
 
 const fetcher = (product: ProductDetail) =>
   axios.post(`${BASE_URL}/carts`, { product });

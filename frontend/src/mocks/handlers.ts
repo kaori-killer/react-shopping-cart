@@ -1,9 +1,9 @@
 import { rest } from "msw";
 
-const BASE_URL = "http://localhost:3003";
+import { BASE_URL } from "../components/constant";
 
 const handlers = [
-  rest.get(`${BASE_URL}/products`, (req, res, ctx) => {
+  rest.get(`${BASE_URL}/products`, (res, ctx) => {
     const products = [
       {
         category: "Fruits",

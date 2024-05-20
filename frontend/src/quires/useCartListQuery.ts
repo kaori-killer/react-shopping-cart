@@ -5,7 +5,7 @@ import { CartDetail } from "../types";
 
 export const QUERY_KEY = "/carts";
 
-const BASE_URL = "http://localhost:3003";
+import { BASE_URL } from "../components/constant";
 
 const fetcher = () =>
   axios.get<CartDetail[]>(`${BASE_URL}/carts`).then(({ data }) => {
