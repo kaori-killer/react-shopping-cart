@@ -42,12 +42,12 @@ export default function CartContent({ cart }: CartContentProps) {
     if (checked) {
       addProductToOrderPayList(product, quantity);
       updateTotalPrice(product.price, quantity);
+
+      return;
     }
 
-    if (!checked) {
-      deleteProductFromOrderPayList(product.id);
-      updateTotalPrice(-product.price, quantity);
-    }
+    deleteProductFromOrderPayList(product.id);
+    updateTotalPrice(-product.price, quantity);
   };
 
   return (
