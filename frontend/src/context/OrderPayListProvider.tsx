@@ -37,7 +37,10 @@ export default function OrderPayListProvider({ children }: PropsWithChildren) {
     product: ProductDetail,
     quantity: number
   ) => {
-    setOrderPayList([{ ...product, quantity }, ...orderPayList]);
+    setOrderPayList((preOrderList) => [
+      ...preOrderList,
+      { ...product, quantity },
+    ]);
   };
 
   const updateProductInOrderPayList = (
