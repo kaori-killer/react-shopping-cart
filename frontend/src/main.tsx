@@ -9,13 +9,25 @@ import OrderPayListProvider from "./context/OrderPayListProvider";
 
 const queryClient = new QueryClient();
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <OrderPayListProvider>
-        <App />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </OrderPayListProvider>
-    </QueryClientProvider>
-  </React.StrictMode>
-);
+function main() {
+  const container = document.getElementById("root");
+
+  if (!container) {
+    return;
+  }
+
+  const root = ReactDOM.createRoot(container);
+
+  root.render(
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <OrderPayListProvider>
+          <App />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </OrderPayListProvider>
+      </QueryClientProvider>
+    </React.StrictMode>
+  );
+}
+
+main();
