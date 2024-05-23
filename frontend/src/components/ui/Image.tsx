@@ -1,5 +1,7 @@
 import classnames from "classnames";
 
+import defaultImg from "../../assets/images/defaultImg.png";
+
 const IMAGE_SIZES = {
   default: "w-280 h-280",
   small: "w-144 h-144",
@@ -14,14 +16,10 @@ type ImageProps = {
 };
 
 export default function Image({ variant, className, src, alt }: ImageProps) {
-  if (!src) {
-    return null;
-  }
-
   return (
     <img
       className={classnames(IMAGE_SIZES[variant], { className })}
-      src={src}
+      src={src || defaultImg}
       alt={alt}
     />
   );
