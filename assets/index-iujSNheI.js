@@ -14392,7 +14392,7 @@ const backButton = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAA
 function BackButton() {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/react-shopping-cart");
+    navigate(DEFAULT_URL);
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: handleClick, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: backButton }) });
 }
@@ -15112,7 +15112,7 @@ function ShoppingCartPage() {
     const cartItemCheckListTotalQuantity = cartItemList.reduce((acc, item) => {
       return checkedMap.get(item.id) ? acc + item.quantity : acc;
     }, 0);
-    navigate("/react-shopping-cart/payment-amount-check", {
+    navigate(`${DEFAULT_URL}payment-amount-check`, {
       state: {
         checkedProductsLength,
         cartItemCheckListTotalQuantity,
@@ -17036,7 +17036,7 @@ function PaymentAmountCheckPage() {
   } = location.state;
   const totalPrice = allProductPrice + shippingFee - (couponPrice || 0);
   const handlePayment = () => {
-    navigate("/react-shopping-cart/order-check", {
+    navigate(`${DEFAULT_URL}/order-check`, {
       state: {
         checkedProductsLength,
         cartItemCheckListTotalQuantity,
@@ -17194,7 +17194,7 @@ function OrderCheckPage() {
     ] });
   }
   const handlePayment = () => {
-    navigate("/order-success", {
+    navigate(`${DEFAULT_URL}/order-success`, {
       state: {
         checkedProductsLength,
         cartItemCheckListTotalQuantity,
@@ -17256,7 +17256,7 @@ const routes = [
         element: /* @__PURE__ */ jsxRuntimeExports.jsx(PaymentAmountCheckPage, {})
       },
       {
-        path: `${DEFAULT_URL}order-check`,
+        path: `${DEFAULT_URL}/order-check`,
         element: /* @__PURE__ */ jsxRuntimeExports.jsx(OrderCheckPage, {})
       },
       {
