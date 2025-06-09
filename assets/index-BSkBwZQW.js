@@ -15112,7 +15112,7 @@ function ShoppingCartPage() {
     const cartItemCheckListTotalQuantity = cartItemList.reduce((acc, item) => {
       return checkedMap.get(item.id) ? acc + item.quantity : acc;
     }, 0);
-    navigate(`${DEFAULT_URL}payment-amount-check`, {
+    navigate(`${DEFAULT_URL}/payment-amount-check`, {
       state: {
         checkedProductsLength,
         cartItemCheckListTotalQuantity,
