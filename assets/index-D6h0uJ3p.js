@@ -17242,24 +17242,25 @@ const Container = newStyled.div`
 function OrderSuccessPage() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Container, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "주문 성공 😊" }) });
 }
+const DEFAULT_URL = "/react-shopping-cart";
 const routes = [
   {
     element: /* @__PURE__ */ jsxRuntimeExports.jsx(Layout, {}),
     children: [
       {
-        path: "/",
+        path: DEFAULT_URL,
         element: /* @__PURE__ */ jsxRuntimeExports.jsx(ShoppingCartPage, {})
       },
       {
-        path: "/payment-amount-check",
+        path: `${DEFAULT_URL}/payment-amount-check`,
         element: /* @__PURE__ */ jsxRuntimeExports.jsx(PaymentAmountCheckPage, {})
       },
       {
-        path: "/order-check",
+        path: `${DEFAULT_URL}order-check`,
         element: /* @__PURE__ */ jsxRuntimeExports.jsx(OrderCheckPage, {})
       },
       {
-        path: "/order-success",
+        path: `${DEFAULT_URL}/order-success`,
         element: /* @__PURE__ */ jsxRuntimeExports.jsx(OrderSuccessPage, {})
       }
     ]
