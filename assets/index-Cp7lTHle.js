@@ -14392,7 +14392,7 @@ const backButton = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAA
 function BackButton() {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/");
+    navigate("/react-shopping-cart");
   };
   return /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: handleClick, children: /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: backButton }) });
 }
@@ -15112,7 +15112,7 @@ function ShoppingCartPage() {
     const cartItemCheckListTotalQuantity = cartItemList.reduce((acc, item) => {
       return checkedMap.get(item.id) ? acc + item.quantity : acc;
     }, 0);
-    navigate("/payment-amount-check", {
+    navigate("/react-shopping-cart/payment-amount-check", {
       state: {
         checkedProductsLength,
         cartItemCheckListTotalQuantity,
@@ -17036,7 +17036,7 @@ function PaymentAmountCheckPage() {
   } = location.state;
   const totalPrice = allProductPrice + shippingFee - (couponPrice || 0);
   const handlePayment = () => {
-    navigate("/order-check", {
+    navigate("/react-shopping-cart/order-check", {
       state: {
         checkedProductsLength,
         cartItemCheckListTotalQuantity,
