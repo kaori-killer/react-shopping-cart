@@ -16711,7 +16711,7 @@ const useCoupons = () => {
     coupons
   };
 };
-function isCouponValid(coupon, orderAmount, now) {
+function isCouponValid(coupon, orderAmount, now = /* @__PURE__ */ new Date()) {
   const expiration = /* @__PURE__ */ new Date(`${coupon.expirationDate}T23:59:59`);
   if (expiration < now) return false;
   if ("minimumAmount" in coupon && orderAmount < coupon.minimumAmount) {
