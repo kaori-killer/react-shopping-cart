@@ -14496,7 +14496,7 @@ const Button$1 = newStyled.button`
 function Footer(props) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(Footer$1, { ...props, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Button$1, { onClick: props.handleClick, children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: props.text }) }) });
 }
-const Container$6 = newStyled.div`
+const Container$7 = newStyled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14520,12 +14520,12 @@ function ErrorBox() {
   if (!errorMessage) {
     return null;
   }
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Container$6, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: errorMessage }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Container$7, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: errorMessage }) });
 }
 function EmptyText({ text }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: text }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Container$6, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: text }) });
 }
-newStyled.div`
+const Container$6 = newStyled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14558,7 +14558,7 @@ const fetchCartItems = async ({
   };
   const response = await fetch(url, options);
   if (!response.ok) {
-    throw new Error("에러 발생!");
+    throw new Error("장바구니 정보를 가져오는데 실패했습니다.");
   }
   const data = await response.json();
   return data;
@@ -16620,178 +16620,6 @@ re.Body = Xn;
 re.Footer = Kn;
 re.Button = na;
 re.Input = oa;
-const BASE_URL = `${"http://techcourse-lv2-alb-974870821.ap-northeast-2.elb.amazonaws.com"}/coupons`;
-const TOKEN = "a2Fvcmkta2lsbGVyOnBhc3N3b3Jk";
-const fetchCoupons = async ({
-  method
-}) => {
-  const url = new URL(BASE_URL);
-  const options = {
-    method,
-    headers: {
-      accept: "application/json",
-      Authorization: `Basic ${TOKEN}`
-    }
-  };
-  const response = await fetch(url, options);
-  if (!response.ok) {
-    throw new Error("에러 발생!");
-  }
-  const data = await response.json();
-  return data;
-};
-const INIT_STATE = {
-  isLoading: false,
-  isFetching: false,
-  isSuccess: false,
-  isFail: false
-};
-const ACTION_TYPE = {
-  FETCH_LOADING: "FETCH_LOADING",
-  FETCH_FETCHING: "FETCH_FETCHING",
-  FETCH_SUCCESS: "FETCH_SUCCESS",
-  FETCH_FAIL: "FETCH_FAIL"
-};
-const reducer = (state, action) => {
-  switch (action.type) {
-    case ACTION_TYPE.FETCH_LOADING:
-      return {
-        isLoading: true,
-        isFetching: false,
-        isSuccess: false,
-        isFail: false
-      };
-    case ACTION_TYPE.FETCH_FETCHING:
-      return {
-        isLoading: false,
-        isFetching: true,
-        isSuccess: false,
-        isFail: false
-      };
-    case ACTION_TYPE.FETCH_SUCCESS:
-      return {
-        isFetching: false,
-        isLoading: false,
-        isSuccess: true,
-        isFail: false
-      };
-    case ACTION_TYPE.FETCH_FAIL:
-      return {
-        isFetching: false,
-        isLoading: false,
-        isSuccess: false,
-        isFail: true
-      };
-    default:
-      return state;
-  }
-};
-const useCoupons = () => {
-  const [state, dispatch] = reactExports.useReducer(reducer, INIT_STATE);
-  const [coupons, setCoupons] = reactExports.useState([]);
-  const { handleErrorMessage } = useErrorContext();
-  reactExports.useEffect(() => {
-    dispatch({ type: ACTION_TYPE.FETCH_LOADING });
-    fetchData();
-  }, []);
-  const fetchData = async () => {
-    try {
-      const data = await fetchCoupons({
-        method: "GET"
-      });
-      setCoupons(data);
-      dispatch({ type: ACTION_TYPE.FETCH_SUCCESS });
-    } catch (error) {
-      dispatch({ type: ACTION_TYPE.FETCH_FAIL });
-      handleErrorMessage("쿠폰 데이터를 불러오지 못했습니다.");
-    }
-  };
-  return {
-    state,
-    coupons
-  };
-};
-function isCouponValid(coupon, orderAmount, now = /* @__PURE__ */ new Date()) {
-  const expiration = /* @__PURE__ */ new Date(`${coupon.expirationDate}T23:59:59`);
-  if (expiration < now) return false;
-  if ("minimumAmount" in coupon && orderAmount < coupon.minimumAmount) {
-    return false;
-  }
-  if (coupon.code === "MIRACLESALE" && "availableTime" in coupon) {
-    const [startH, startM] = coupon.availableTime.start.split(":").map(Number);
-    const [endH, endM] = coupon.availableTime.end.split(":").map(Number);
-    const nowMinutes = now.getHours() * 60 + now.getMinutes();
-    const startMinutes = startH * 60 + startM;
-    const endMinutes = endH * 60 + endM;
-    return nowMinutes >= startMinutes && nowMinutes < endMinutes;
-  }
-  return true;
-}
-function calculateAllCouponCombos({
-  coupons,
-  cartItemList,
-  orderAmount,
-  isIslandArea,
-  now = /* @__PURE__ */ new Date()
-}) {
-  return getAllCouponCombos(coupons).map((combo) => {
-    const isValid = combo.every(
-      (coupon) => isCouponValid(coupon, orderAmount, now)
-    );
-    const discount = isValid ? combo.reduce((total, coupon) => {
-      switch (coupon.discountType.toLowerCase()) {
-        case "fixed":
-          return total + calcFixedDiscount(coupon, orderAmount);
-        case "buyxgety":
-          return total + calcBuyXGetYDiscount(cartItemList);
-        case "freeshipping":
-          return total + calcFreeShipping(coupon, orderAmount, isIslandArea);
-        case "percentage":
-          return total + calcPercentageDiscount(coupon, orderAmount);
-        default:
-          console.warn("Unrecognized coupon type:", coupon.discountType);
-          return total;
-      }
-    }, 0) : 0;
-    return {
-      combo: combo.map((c2) => c2.code),
-      discount,
-      isValid
-    };
-  });
-}
-function calcBuyXGetYDiscount(cartItemList) {
-  const candidates = cartItemList.filter((item) => item.quantity >= 3);
-  if (candidates.length === 0) return 0;
-  return candidates.reduce((max, item) => Math.max(max, item.product.price), 0);
-}
-function calcFixedDiscount(coupon, orderAmount) {
-  return "discount" in coupon && "minimumAmount" in coupon && orderAmount >= coupon.minimumAmount ? coupon.discount : 0;
-}
-function calcFreeShipping(coupon, orderAmount, isIslandArea) {
-  const shippingCost = isIslandArea ? LAND_AREA_DEFAULT_SHIPPING_FEE : DEFAULT_SHIPPING_FEE;
-  const policyFreeShipping = orderAmount >= 1e5 ? 3e3 : 0;
-  return "minimumAmount" in coupon && orderAmount >= coupon.minimumAmount ? shippingCost - policyFreeShipping : 0;
-}
-function calcPercentageDiscount(coupon, orderAmount) {
-  return "discount" in coupon ? Math.floor(orderAmount * (coupon.discount / 100)) : 0;
-}
-function getAllCouponCombos(coupons) {
-  const singleCombos = coupons.map((c2) => [c2]);
-  const pairCombos = coupons.flatMap(
-    (c1) => coupons.filter((c2) => c2 !== c1).map((c2) => [c1, c2])
-  );
-  return [...singleCombos, ...pairCombos];
-}
-function formatAvailableTime(start, end) {
-  return `${format(start)}부터 ${format(end)}까지`;
-}
-const format = (time) => {
-  const hour = parseInt(time.split(":")[0], 10);
-  const period = hour < 12 ? "오전" : "오후";
-  const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
-  return `${period} ${displayHour}시`;
-};
 const CouponContainer = newStyled.div`
   margin-top: 20px;
   margin-bottom: 20px;
@@ -16871,9 +16699,282 @@ const disabledText = newStyled.p`
   color: #f00;
   font-size: 10px;
 `;
+function isCouponValid(coupon, orderAmount, now = /* @__PURE__ */ new Date()) {
+  const expiration = /* @__PURE__ */ new Date(`${coupon.expirationDate}T23:59:59`);
+  if (expiration < now) return false;
+  if ("minimumAmount" in coupon && orderAmount < coupon.minimumAmount) {
+    return false;
+  }
+  if (coupon.code === "MIRACLESALE" && "availableTime" in coupon) {
+    const [startH, startM] = coupon.availableTime.start.split(":").map(Number);
+    const [endH, endM] = coupon.availableTime.end.split(":").map(Number);
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+    const startMinutes = startH * 60 + startM;
+    const endMinutes = endH * 60 + endM;
+    return nowMinutes >= startMinutes && nowMinutes < endMinutes;
+  }
+  return true;
+}
+function formatAvailableTime(start, end) {
+  return `${format(start)}부터 ${format(end)}까지`;
+}
+const format = (time) => {
+  const hour = parseInt(time.split(":")[0], 10);
+  const period = hour < 12 ? "오전" : "오후";
+  const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+  return `${period} ${displayHour}시`;
+};
 function formatDate(isoDate) {
   const [year, month, day] = isoDate.split("-");
   return `${year}년 ${month}월 ${day}일`;
+}
+function CouponItem({
+  coupon,
+  orderAmount,
+  isSelected,
+  onToggle,
+  selectedCouponsSize
+}) {
+  const unavailableCoupon = !isCouponValid(coupon, orderAmount);
+  const disabled = selectedCouponsSize >= 2 && !isSelected || unavailableCoupon;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(CouponContainer, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(Hr$1, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Checkbox, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        Input,
+        {
+          type: "checkbox",
+          id: `coupon-${coupon.id}`,
+          checked: isSelected,
+          disabled,
+          onChange: onToggle
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("label", { htmlFor: `coupon-${coupon.id}`, children: coupon.description })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(CouponDescribe, { children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+        "만료일: ",
+        formatDate(coupon.expirationDate)
+      ] }),
+      "minimumAmount" in coupon && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+        "최소 주문 금액: ",
+        coupon.minimumAmount
+      ] }),
+      "availableTime" in coupon && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
+        "사용 가능 시간:",
+        " ",
+        formatAvailableTime(
+          coupon.availableTime.start,
+          coupon.availableTime.end
+        )
+      ] }),
+      unavailableCoupon && /* @__PURE__ */ jsxRuntimeExports.jsx(disabledText, { children: "사용 불가: 기간이 지났거나 시간 조건에 맞지 않아요." })
+    ] })
+  ] });
+}
+const BASE_URL = `${"http://techcourse-lv2-alb-974870821.ap-northeast-2.elb.amazonaws.com"}/coupons`;
+const TOKEN = "a2Fvcmkta2lsbGVyOnBhc3N3b3Jk";
+const fetchCoupons = async ({
+  method
+}) => {
+  const url = new URL(BASE_URL);
+  const options = {
+    method,
+    headers: {
+      accept: "application/json",
+      Authorization: `Basic ${TOKEN}`
+    }
+  };
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error("쿠폰 정보를 가져오는데 실패했습니다.");
+  }
+  const data = await response.json();
+  return data;
+};
+const INIT_STATE = {
+  isLoading: false,
+  isFetching: false,
+  isSuccess: false,
+  isFail: false
+};
+const ACTION_TYPE = {
+  FETCH_LOADING: "FETCH_LOADING",
+  FETCH_FETCHING: "FETCH_FETCHING",
+  FETCH_SUCCESS: "FETCH_SUCCESS",
+  FETCH_FAIL: "FETCH_FAIL"
+};
+const reducer = (state, action) => {
+  switch (action.type) {
+    case ACTION_TYPE.FETCH_LOADING:
+      return {
+        isLoading: true,
+        isFetching: false,
+        isSuccess: false,
+        isFail: false
+      };
+    case ACTION_TYPE.FETCH_FETCHING:
+      return {
+        isLoading: false,
+        isFetching: true,
+        isSuccess: false,
+        isFail: false
+      };
+    case ACTION_TYPE.FETCH_SUCCESS:
+      return {
+        isFetching: false,
+        isLoading: false,
+        isSuccess: true,
+        isFail: false
+      };
+    case ACTION_TYPE.FETCH_FAIL:
+      return {
+        isFetching: false,
+        isLoading: false,
+        isSuccess: false,
+        isFail: true
+      };
+    default:
+      return state;
+  }
+};
+const useCoupons = () => {
+  const [state, dispatch] = reactExports.useReducer(reducer, INIT_STATE);
+  const [coupons, setCoupons] = reactExports.useState([]);
+  const { handleErrorMessage } = useErrorContext();
+  reactExports.useEffect(() => {
+    dispatch({ type: ACTION_TYPE.FETCH_LOADING });
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+    try {
+      const data = await fetchCoupons({
+        method: "GET"
+      });
+      setCoupons(data);
+      dispatch({ type: ACTION_TYPE.FETCH_SUCCESS });
+    } catch (error) {
+      dispatch({ type: ACTION_TYPE.FETCH_FAIL });
+      handleErrorMessage("쿠폰 데이터를 불러오지 못했습니다.");
+    }
+  };
+  return {
+    state,
+    coupons
+  };
+};
+const MAX_COUPON_COUNT = 2;
+const useSelectedCoupons = () => {
+  const [selectedCoupons, setSelectedCoupons] = reactExports.useState(/* @__PURE__ */ new Map());
+  const initializeSelectedCoupons = (initialMap) => {
+    setSelectedCoupons(new Map(initialMap));
+  };
+  const resetCoupons = () => {
+    setSelectedCoupons(/* @__PURE__ */ new Map());
+  };
+  const toggleCoupon = (couponId) => {
+    setSelectedCoupons((prev2) => {
+      const newMap = new Map(prev2);
+      if (newMap.has(couponId)) {
+        newMap.delete(couponId);
+        return newMap;
+      }
+      if (newMap.size >= MAX_COUPON_COUNT) {
+        return newMap;
+      }
+      newMap.set(couponId, true);
+      return newMap;
+    });
+  };
+  const isSelected = (couponId) => selectedCoupons.has(couponId);
+  return {
+    selectedCoupons,
+    initializeSelectedCoupons,
+    resetCoupons,
+    toggleCoupon,
+    isSelected
+  };
+};
+function calculateAllCouponCombos({
+  coupons,
+  cartItemList,
+  orderAmount,
+  isIslandArea,
+  now = /* @__PURE__ */ new Date()
+}) {
+  return getAllCouponCombos(coupons).map((combo) => {
+    const isValid = combo.every(
+      (coupon) => isCouponValid(coupon, orderAmount, now)
+    );
+    const discount = isValid ? combo.reduce((total, coupon) => {
+      switch (coupon.discountType.toLowerCase()) {
+        case "fixed":
+          return total + calcFixedDiscount(coupon, orderAmount);
+        case "buyxgety":
+          return total + calcBuyXGetYDiscount(cartItemList);
+        case "freeshipping":
+          return total + calcFreeShipping(coupon, orderAmount, isIslandArea);
+        case "percentage":
+          return total + calcPercentageDiscount(coupon, orderAmount);
+        default:
+          return total;
+      }
+    }, 0) : 0;
+    return {
+      combo: combo.map((c2) => c2.code),
+      discount,
+      isValid
+    };
+  });
+}
+function calcBuyXGetYDiscount(cartItemList) {
+  const candidates = cartItemList.filter((item) => item.quantity >= 3);
+  if (candidates.length === 0) return 0;
+  return candidates.reduce((max, item) => Math.max(max, item.product.price), 0);
+}
+function calcFixedDiscount(coupon, orderAmount) {
+  return "discount" in coupon && "minimumAmount" in coupon && orderAmount >= coupon.minimumAmount ? coupon.discount : 0;
+}
+function calcFreeShipping(coupon, orderAmount, isIslandArea) {
+  const shippingCost = isIslandArea ? LAND_AREA_DEFAULT_SHIPPING_FEE : DEFAULT_SHIPPING_FEE;
+  const policyFreeShipping = orderAmount >= 1e5 ? 3e3 : 0;
+  return "minimumAmount" in coupon && orderAmount >= coupon.minimumAmount ? shippingCost - policyFreeShipping : 0;
+}
+function calcPercentageDiscount(coupon, orderAmount) {
+  return "discount" in coupon ? Math.floor(orderAmount * (coupon.discount / 100)) : 0;
+}
+function getAllCouponCombos(coupons) {
+  const singleCombos = coupons.map((c2) => [c2]);
+  const pairCombos = coupons.flatMap(
+    (c1) => coupons.filter((c2) => c2 !== c1).map((c2) => [c1, c2])
+  );
+  return [...singleCombos, ...pairCombos];
+}
+function getSelectedCouponDiscount({
+  coupons,
+  selectedCoupons,
+  cartItemList,
+  orderAmount,
+  isIslandArea
+}) {
+  return coupons.reduce((totalDiscount, coupon) => {
+    var _a;
+    if (!selectedCoupons.get(coupon.id)) return totalDiscount;
+    const discount = ((_a = calculateAllCouponCombos({
+      coupons: [coupon],
+      cartItemList,
+      orderAmount,
+      isIslandArea
+    }).find((combo) => combo.isValid)) == null ? void 0 : _a.discount) ?? 0;
+    return totalDiscount + discount;
+  }, 0);
+}
+function getBestCombo(combos) {
+  return combos.filter((combo) => combo.isValid).reduce(
+    (max, current) => current.discount > max.discount ? current : max,
+    { discount: 0, combo: [], isValid: false }
+  );
 }
 function CouponModal({
   isOpen,
@@ -16883,62 +16984,48 @@ function CouponModal({
   orderAmount,
   isIslandArea
 }) {
+  const hasInitializedRef = reactExports.useRef(false);
   const { coupons } = useCoupons();
-  const [selectedCoupons, setSelectedCoupons] = reactExports.useState(
-    /* @__PURE__ */ new Map()
-  );
-  const [isInitial, setIsInitial] = reactExports.useState(true);
+  const {
+    selectedCoupons,
+    initializeSelectedCoupons,
+    toggleCoupon,
+    resetCoupons,
+    isSelected
+  } = useSelectedCoupons();
   const combos = calculateAllCouponCombos({
     coupons,
     cartItemList,
     orderAmount,
     isIslandArea
   });
-  const bestCombo = combos.filter((combo) => combo.isValid).reduce(
-    (max, current) => current.discount > max.discount ? current : max,
-    { discount: 0, combo: [], isValid: false }
-  );
+  const bestCombo = getBestCombo(combos);
   reactExports.useEffect(() => {
-    if (isInitial && bestCombo.combo.length > 0) {
-      const initialMap = /* @__PURE__ */ new Map();
-      bestCombo.combo.forEach((code) => {
-        const match2 = coupons.find((c2) => c2.code === code);
-        if (match2) initialMap.set(match2.id, true);
-      });
-      setSelectedCoupons(initialMap);
-      setIsInitial(false);
-    }
-  }, [coupons, bestCombo, isInitial]);
-  const handleCheckboxChange = (couponId) => {
-    setSelectedCoupons((prev2) => {
-      const newMap = new Map(prev2);
-      if (newMap.get(couponId)) {
-        newMap.delete(couponId);
-      } else {
-        if (newMap.size < 2) {
-          newMap.set(couponId, true);
-        }
-      }
-      return newMap;
+    if (bestCombo.combo.length === 0 || selectedCoupons.size > 0) return;
+    if (hasInitializedRef.current) return;
+    const initialMap = /* @__PURE__ */ new Map();
+    bestCombo.combo.forEach((code) => {
+      const match2 = coupons.find((c2) => c2.code === code);
+      if (match2) initialMap.set(match2.id, true);
     });
-  };
-  const selectedCouponObjects = coupons.filter(
-    (c2) => selectedCoupons.has(c2.id)
-  );
-  const selectedCombos = calculateAllCouponCombos({
-    coupons: selectedCouponObjects,
+    initializeSelectedCoupons(initialMap);
+    hasInitializedRef.current = true;
+  }, [
+    bestCombo.combo,
+    coupons,
+    initializeSelectedCoupons,
+    selectedCoupons.size
+  ]);
+  const selectedDiscount = getSelectedCouponDiscount({
+    coupons,
+    selectedCoupons,
     cartItemList,
     orderAmount,
     isIslandArea
   });
-  const selectedCombo = selectedCombos.find((c2) => c2.isValid) ?? {
-    discount: 0
-  };
-  const selectedDiscount = selectedCombo.discount;
   const handleApply = () => {
     handleApplyCouponPrice(selectedDiscount);
-    setSelectedCoupons(/* @__PURE__ */ new Map());
-    setIsInitial(true);
+    resetCoupons();
     handleClose();
   };
   return reactDomExports.createPortal(
@@ -16949,45 +17036,17 @@ function CouponModal({
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs(re.Body, { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(WarningBox, { text: "쿠폰은 최대 2개까지 사용할 수 있습니다." }),
-        coupons.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "사용 가능한 쿠폰이 없습니다." }) : coupons.map((coupon) => {
-          const unavailableCoupon = !isCouponValid(coupon, orderAmount);
-          const disabled = unavailableCoupon || !selectedCoupons.get(coupon.id) && selectedCoupons.size >= 2;
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs(CouponContainer, { children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Hr$1, {}),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(Checkbox, { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx(
-                Input,
-                {
-                  type: "checkbox",
-                  id: `coupon-${coupon.id}`,
-                  checked: !!selectedCoupons.get(coupon.id),
-                  disabled,
-                  onChange: () => handleCheckboxChange(coupon.id)
-                }
-              ),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("label", { htmlFor: `coupon-${coupon.id}`, children: coupon.description })
-            ] }),
-            /* @__PURE__ */ jsxRuntimeExports.jsxs(CouponDescribe, { children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-                "만료일: ",
-                formatDate(coupon.expirationDate)
-              ] }),
-              "minimumAmount" in coupon && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-                "최소 주문 금액: ",
-                coupon.minimumAmount
-              ] }),
-              "availableTime" in coupon && /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { children: [
-                "사용 가능 시간:",
-                " ",
-                formatAvailableTime(
-                  coupon.availableTime.start,
-                  coupon.availableTime.end
-                )
-              ] }),
-              unavailableCoupon && /* @__PURE__ */ jsxRuntimeExports.jsx(disabledText, { children: "사용 불가: 기간이 지났거나 시간 조건에 맞지 않아요." })
-            ] })
-          ] }, coupon.id);
-        })
+        coupons.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { children: "사용 가능한 쿠폰이 없습니다." }) : coupons.map((coupon) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+          CouponItem,
+          {
+            coupon,
+            orderAmount,
+            isSelected: isSelected(coupon.id),
+            selectedCouponsSize: selectedCoupons.size,
+            onToggle: () => toggleCoupon(coupon.id)
+          },
+          coupon.id
+        ))
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(re.Footer, { direction: "column", align: "start", justify: "center", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
         Button,
@@ -17084,7 +17143,7 @@ function PaymentAmountCheckPage() {
         ] })
       ] }, cart.id)),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
+        isOpen && /* @__PURE__ */ jsxRuntimeExports.jsx(
           CouponModal,
           {
             isOpen,
